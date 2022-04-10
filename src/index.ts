@@ -1,1 +1,1 @@
-export { default as VitePluginCraft } from "./plugin";
+export { default as VitePluginCraftCms } from "./plugin";

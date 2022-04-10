@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { ResolvedConfig } from "vite";
-import { InputOptions } from "rollup";
+import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
+import { NormalizedInputOptions } from "rollup";
 
 export default function craftPartials(options = {}) {
   const { outputFile, template } = Object.assign(
@@ -24,16 +24,16 @@ export default function craftPartials(options = {}) {
       config = resolvedConfig;
 
       const { server } = config;
-      proxyUrl = `http://localhost:${server.port}`;
+      proxyUrl = `http://localhost:${server.port || 3000}`;
     },
 
-    buildStart({ input }: InputOptions) {
+    buildStart({ input }: any) {
       const { mode } = config;
       if (mode === "production") {
         return;
       }
 
-      const inputFile = fs.readFileSync(input as string);
+      const inputFile = fs.readFileSync(input);
       const { scripts, links, meta } = parseFile(inputFile.toString());
 
       fs.writeFileSync(
@@ -55,10 +55,16 @@ export default function craftPartials(options = {}) {
 
     closeBundle() {
       console.log("Removing src files in dist ...");
-      fs.rmSync(path.resolve(config.publicDir, "./src"), {
+      const outputPath = path.resolve(
+        config.root,
+        config.build.outDir,
+        "./src"
+      );
+
+      fs.rmSync(outputPath, {
         recursive: true,
         force: true,
       });
     },
-  };
+  } as Plugin;
 }
