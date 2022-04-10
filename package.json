@@ -7,19 +7,40 @@
   ],
   "main": "./dist/index.mjs",
   "module": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "build": "unbuild"
+    "build": "unbuild",
+    "prepublishOnly": "npm run build"
   },
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
-  "author": "",
-  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Brian Hanson",
+      "email": "brian@brianhanson.net",
+      "url": "https://www.brianhanson.net/"
+    },
+    {
+      "name": "Chris Malven",
+      "url": "https://malven.co/"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brianjhanson/vite-plugin-craftcms",
+    "directory": "src"
+  },
+  "bugs": {
+    "url": "https://github.com/brianjhanson/vite-plugin-craftcms/issues"
+  },
+  "homepage": "https://github.com/brianjhanson/vite-plugin-craftcms#readme",
   "peerDependencies": {
     "vite": "^2.0.0"
   },
