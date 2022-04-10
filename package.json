@@ -9,7 +9,8 @@
   "module": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "build": "unbuild",
     "prepublishOnly": "npm run build"
   },
