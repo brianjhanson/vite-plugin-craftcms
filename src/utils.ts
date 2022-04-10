@@ -1,6 +1,5 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
-import fs from "fs";
 
 /**
  * Parses an HTML string and separates it into scripts, links and meta tags
@@ -62,14 +61,15 @@ export function defaultTemplateFunction({
   const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
   const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
 
-  let templateString = `
-  {% html at head %}${meta.toString()}${linkTags.toString()}{% endhtml %}
-  {% html at endBody %}${scriptTags.toString()}{% endhtml %}
-  `.trim();
+  let headString = `${meta.toString()}${linkTags.toString()}`;
+  let endBody = `${scriptTags.toString()}`;
 
   if (mode === "development") {
-    templateString = `<script type="module" src="${proxyUrl}/@vite/client"></script>${templateString}`;
+    headString = `<script type="module" src="${proxyUrl}/@vite/client"></script>${headString}`;
   }
 
-  return templateString;
+  return `
+  {% html at head %}${headString}{% endhtml %}
+  {% html at endBody %}${endBody}{% endhtml %}
+  `.trim();
 }

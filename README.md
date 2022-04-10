@@ -1,5 +1,7 @@
 # Vite Plugin Craft CMS
 
+
+
 A [vite](https://vitejs.dev/) plugin that that allows you to use vite with Craft CMS without a Craft plugin.
 
 ## General Approach
@@ -91,8 +93,8 @@ It will also replace all your relative URLs with URLs to the vite proxy server.
 
 With the example entry above, that output fill will be:
 ```twig
-<script type="module" src="http://localhost:3300/@vite/client"></script>
 {% html at head %}
+<script type="module" src="http://localhost:3300/@vite/client"></script>
 <link rel="stylesheet" href="http://localhost:3300/src/styles/main.scss">
 {% endhtml%}
 {% html at endBody %}
