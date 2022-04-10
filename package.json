@@ -5,16 +5,17 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vite-plugin-craftcms.umd.js",
-  "module": "./dist/vite-plugin-craftcms.es.js",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.cjs",
   "scripts": {
     "test": "vitest",
     "build": "unbuild"
   },
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vite-plugin-craftcms.es.js",
-      "require": "./dist/vite-plugin-craftcms.umd.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     }
   },
   "author": "",
