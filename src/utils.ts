@@ -61,8 +61,8 @@ export function defaultTemplateFunction({
   const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
   const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
 
-  let headString = `${meta.toString()}${linkTags.toString()}`;
-  let endBody = `${scriptTags.toString()}`;
+  let headString = `${meta.join('')}${linkTags.join('')}`;
+  let endBody = `${scriptTags.join('')}`;
 
   if (mode === "development") {
     headString = `<script type="module" src="${proxyUrl}/@vite/client"></script>${headString}`;

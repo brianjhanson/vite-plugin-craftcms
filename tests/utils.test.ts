@@ -28,30 +28,20 @@ test("replaceAttribute", () => {
   expect(result.toString()).toContain(expected);
 });
 
-test("defaultTemplateFunction", () => {
-  test("production mode", () => {
-    const { scripts, links } = parseFile(TEST_HTML);
-    const result = defaultTemplateFunction({ scripts, links });
+test("defaultTemplateFunction production mode", () => {
+  const { scripts, links } = parseFile(TEST_HTML);
+  const result = defaultTemplateFunction({ scripts, links });
 
-    const expected =
-      `{% html at head %}<link rel="stylesheet" href="http://localhost:3300/src/styles/main.scss">{% endhtml %}
-{% html at endBody %}<script type="module" src="http://localhost:3300/src/scripts/main.js"></script>{% endhtml %}
-  `.trim();
-    expect(result).toEqual(expected);
+  expect(result).toMatchSnapshot();
+});
+
+test("defaultTemplateFunction development mode", () => {
+  const { scripts, links } = parseFile(TEST_HTML);
+  const result = defaultTemplateFunction({
+    scripts,
+    links,
+    mode: "development",
   });
 
-  test("development mode", () => {
-    const { scripts, links } = parseFile(TEST_HTML);
-    const result = defaultTemplateFunction({
-      scripts,
-      links,
-      mode: "development",
-    });
-
-    const expected =
-      `<script type="module" src="http://localhost:3300/@vite/client"></script>{% html at head %}<link rel="stylesheet" href="http://localhost:3300/src/styles/main.scss">{% endhtml %}
-{% html at endBody %}<script type="module" src="http://localhost:3300/src/scripts/main.js"></script>{% endhtml %}
-  `.trim();
-    expect(result).toEqual(expected);
-  });
+  expect(result).toMatchSnapshot();
 });

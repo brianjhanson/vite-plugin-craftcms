@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`defaultTemplateFunction development mode 1`] = `
+"{% html at head %}<script type=\\"module\\" src=\\"/@vite/client\\"></script><link rel=\\"stylesheet\\" href=\\"/src/styles/main.scss\\"><link rel=\\"stylesheet\\" href=\\"/src/styles/test.scss\\">{% endhtml %}
+  {% html at endBody %}<script type=\\"module\\" src=\\"/src/scripts/main.js\\"></script>{% endhtml %}"
+`;
+
+exports[`defaultTemplateFunction production mode 1`] = `
+"{% html at head %}<link rel=\\"stylesheet\\" href=\\"/src/styles/main.scss\\"><link rel=\\"stylesheet\\" href=\\"/src/styles/test.scss\\">{% endhtml %}
+  {% html at endBody %}<script type=\\"module\\" src=\\"/src/scripts/main.js\\"></script>{% endhtml %}"
+`;
