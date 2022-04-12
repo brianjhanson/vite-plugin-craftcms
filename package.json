@@ -43,6 +43,9 @@
     "url": "https://github.com/brianjhanson/vite-plugin-craftcms/issues"
   },
   "homepage": "https://github.com/brianjhanson/vite-plugin-craftcms#readme",
+  "peerDependencies": {
+    "vite": "^2.0.0",
+  },
   "devDependencies": {
     "@types/node": "^17.0.23",
     "eslint": "^8.12.0",
