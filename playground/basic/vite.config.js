@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { VitePluginCraftCms } from "../../src/index";
+import { vitePluginCraftCms } from "../../src/index";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
@@ -12,7 +12,7 @@ export default defineConfig(() => {
       },
     },
     plugins: [
-      VitePluginCraftCms({
+      vitePluginCraftCms({
         outputFile: "./dist/vite.twig",
       }),
     ],
