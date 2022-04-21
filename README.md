@@ -29,8 +29,7 @@ This should be an HTML fragment located in your `./src` directory. The asset pat
 ### Add the plugin to your `vite.config` file.
 
 ```js
-import viteCraftCms from "vite-plugin-craftcms";
-// your other imports
+import { vitePluginCraftCms } from "vite-plugin-craftcms";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -49,7 +48,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     plugins: [
-      craftPartials({
+      vitePluginCraftCms({
         outputFile: "./templates/_partials/vite.twig",
       }),
       viteRestart({
