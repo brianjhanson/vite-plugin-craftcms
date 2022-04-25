@@ -72,7 +72,7 @@ export function defaultTemplateFunction({
   }
 
   return `
-{%- macro url(path) -%}{{ '${rootPath}' | replace('/\\\\/$/', '') ~ '/' }}{{ path }}{%- endmacro -%}
+{%- macro url(path) -%}{{ '${rootPath}' | replace('/\\\\/$/', '') }}{{ path }}{%- endmacro -%}
 {% html at head %}${headString}{% endhtml %}
 {% html at endBody %}${endBody}{% endhtml %}
 `.trim();

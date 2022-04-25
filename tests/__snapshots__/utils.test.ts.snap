@@ -1,13 +1,13 @@
 // Vitest Snapshot v1
 
 exports[`defaultTemplateFunction development mode 1`] = `
-"{%- macro url(path) -%}{{ 'http://localhost' | replace('/\\\\\\\\/$/', '') ~ '/' }}{{ path }}{%- endmacro -%}
+"{%- macro url(path) -%}{{ 'http://localhost' | replace('/\\\\\\\\/$/', '') }}{{ path }}{%- endmacro -%}
 {% html at head %}<script type=\\"module\\" src=\\"http://localhost/@vite/client\\"></script><link rel=\\"stylesheet\\" href=\\"http://localhost/src/styles/main.scss\\"><link rel=\\"stylesheet\\" href=\\"http://localhost/src/styles/test.scss\\">{% endhtml %}
 {% html at endBody %}<script type=\\"module\\" src=\\"http://localhost/src/scripts/main.js\\"></script>{% endhtml %}"
 `;
 
 exports[`defaultTemplateFunction production mode 1`] = `
-"{%- macro url(path) -%}{{ '/dist/' | replace('/\\\\\\\\/$/', '') ~ '/' }}{{ path }}{%- endmacro -%}
+"{%- macro url(path) -%}{{ '/dist/' | replace('/\\\\\\\\/$/', '') }}{{ path }}{%- endmacro -%}
 {% html at head %}<link rel=\\"stylesheet\\" href=\\"/src/styles/main.scss\\"><link rel=\\"stylesheet\\" href=\\"/src/styles/test.scss\\">{% endhtml %}
 {% html at endBody %}<script type=\\"module\\" src=\\"/src/scripts/main.js\\"></script>{% endhtml %}"
 `;
