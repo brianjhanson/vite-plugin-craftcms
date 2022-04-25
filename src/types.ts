@@ -7,6 +7,7 @@ export interface ParsedHtml {
 }
 
 export interface TemplateParams extends Partial<ParsedHtml> {
+  basePath?: string;
   proxyUrl?: string;
   mode?: string;
 }

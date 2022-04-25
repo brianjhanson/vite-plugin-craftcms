@@ -15,6 +15,7 @@ export default function craftPartials(options = {}) {
   );
 
   let config: ResolvedConfig;
+  let basePath: string;
   let proxyUrl: string;
 
   return {
@@ -23,7 +24,9 @@ export default function craftPartials(options = {}) {
     configResolved(resolvedConfig: ResolvedConfig) {
       config = resolvedConfig;
 
-      const { server } = config;
+      const { base, server } = config;
+
+      basePath = base;
       proxyUrl = `http://localhost:${server.port || 3000}`;
     },
 
@@ -38,7 +41,7 @@ export default function craftPartials(options = {}) {
 
       fs.writeFileSync(
         outputFile,
-        template({ scripts, links, meta, mode, proxyUrl })
+        template({ scripts, links, meta, basePath, mode, proxyUrl })
       );
     },
 
@@ -50,7 +53,7 @@ export default function craftPartials(options = {}) {
       }
 
       const { scripts, links, meta } = parseFile(html);
-      fs.writeFileSync(outputFile, template({ scripts, links, meta, mode }));
+      fs.writeFileSync(outputFile, template({ scripts, links, meta, basePath, mode, proxyUrl }));
     },
 
     closeBundle() {

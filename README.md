@@ -103,3 +103,14 @@ With the example entry above, that output fill will be:
 
 Now you can load up your site, and should be able to enjoy all that vite has to offer. 
 
+
+### Static assets in Twig
+
+If you need to reference static assets from Twig, you can use the included `url` Twig macro:
+
+```twig
+{% import "_partials/vite" as vite %}
+<img src="{{ vite.url('images/foo.jpg') }}">
+```
+
+**Note:** This will only work for assets that are in the `publicDir` defined in your Vite config.
