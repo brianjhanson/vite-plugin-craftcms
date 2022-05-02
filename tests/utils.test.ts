@@ -30,7 +30,7 @@ test("replaceAttribute", () => {
 
 test("defaultTemplateFunction production mode", () => {
   const { scripts, links } = parseFile(TEST_HTML);
-  const result = defaultTemplateFunction({ scripts, links });
+  const result = defaultTemplateFunction({ scripts, links, basePath: "/dist/" });
 
   expect(result).toMatchSnapshot();
 });
@@ -41,6 +41,7 @@ test("defaultTemplateFunction development mode", () => {
     scripts,
     links,
     mode: "development",
+    proxyUrl: "http://localhost",
   });
 
   expect(result).toMatchSnapshot();

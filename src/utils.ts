@@ -48,6 +48,7 @@ export function replaceAttribute(
  * @param scripts
  * @param links
  * @param meta
+ * @param basePath
  * @param proxyUrl
  * @param mode
  */
@@ -55,6 +56,7 @@ export function defaultTemplateFunction({
   scripts = [],
   links = [],
   meta = [],
+  basePath = "",
   proxyUrl = "",
   mode = "production",
 }: TemplateParams): string {
@@ -63,13 +65,15 @@ export function defaultTemplateFunction({
 
   let headString = `${meta.join('')}${linkTags.join('')}`;
   let endBody = `${scriptTags.join('')}`;
+  let rootPath = mode === "development" ? proxyUrl : basePath;
 
   if (mode === "development") {
     headString = `<script type="module" src="${proxyUrl}/@vite/client"></script>${headString}`;
   }
 
   return `
-  {% html at head %}${headString}{% endhtml %}
-  {% html at endBody %}${endBody}{% endhtml %}
-  `.trim();
+{%- macro url(path) -%}{{ '${rootPath}' | replace('/\\\\/$/', '') }}{{ path }}{%- endmacro -%}
+{% html at head %}${headString}{% endhtml %}
+{% html at endBody %}${endBody}{% endhtml %}
+`.trim();
 }
