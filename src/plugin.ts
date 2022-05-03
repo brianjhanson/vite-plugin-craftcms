@@ -2,14 +2,14 @@ import fs from "fs";
 import path from "path";
 import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
-import { NormalizedInputOptions } from "rollup";
 
 export default function craftPartials(options = {}) {
-  const { outputFile, template } = Object.assign(
+  const { outputFile, template, devServerBaseAddress } = Object.assign(
     {},
     {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
+      devServerBaseAddress: "http://localhost",
     },
     options
   );
@@ -27,7 +27,7 @@ export default function craftPartials(options = {}) {
       const { base, server } = config;
 
       basePath = base;
-      proxyUrl = `http://localhost:${server.port || 3000}`;
+      proxyUrl = `${devServerBaseAddress}:${server.port || 3000}`;
     },
 
     buildStart({ input }: any) {
