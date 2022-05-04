@@ -6,7 +6,7 @@ A [vite](https://vitejs.dev/) plugin that that allows you to use vite with Craft
 
 ## General Approach
 
-The plugin parses the `index.html` file created by Vite and generates a Craft twig partial from it. This way we get all benefits of the smart peoeple working on Vite without adding a lot of overhead.
+The plugin parses the `index.html` file created by Vite and generates a Craft twig partial from it. This way we get all benefits of the smart people working on Vite without adding a lot of overhead.
 
 ## Basic Usage
 
