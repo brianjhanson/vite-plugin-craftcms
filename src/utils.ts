@@ -2,7 +2,6 @@ import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
 
 function isValidElement(item: any): boolean {
-  console.log(item);
   return item instanceof HTMLElement
     && [
       "script",
