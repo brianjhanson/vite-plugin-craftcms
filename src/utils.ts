@@ -1,19 +1,29 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
 
+function isValidElement(item: any): boolean {
+  console.log(item);
+  return item instanceof HTMLElement
+    && [
+      "script",
+      "link",
+    ].includes(item.tagName);
+}
+
 /**
  * Parses an HTML string and separates it into scripts, links and meta tags
  */
 export function parseFile(html: string): ParsedHtml {
   const root = parse(html);
-  const scripts = root.querySelectorAll("script");
-  const links = root.querySelectorAll("link");
-  const meta = root.querySelectorAll("meta");
+  const headEl = root.querySelector("head");
+  const bodyEl = root.querySelector("body");
+
+  const head = <HTMLElement[]>headEl?.childNodes.filter(isValidElement);
+  const body = <HTMLElement[]>bodyEl?.childNodes.filter(isValidElement);
 
   return {
-    scripts,
-    links,
-    meta,
+    head,
+    body
   };
 }
 
@@ -45,26 +55,26 @@ export function replaceAttribute(
 
 /**
  *
- * @param scripts
- * @param links
- * @param meta
+ * @param head
+ * @param body
  * @param basePath
  * @param proxyUrl
  * @param mode
  */
 export function defaultTemplateFunction({
-  scripts = [],
-  links = [],
-  meta = [],
+  head = [],
+  body = [],
   basePath = "",
   proxyUrl = "",
   mode = "production",
 }: TemplateParams): string {
-  const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
-  const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
+  // const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
+  // const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
 
-  let headString = `${meta.join('')}${linkTags.join('')}`;
-  let endBody = `${scriptTags.join('')}`;
+  // Create a string from HTML elements
+  let headString = head.map((element) => element.outerHTML).join("");
+  let endBodyString = body.map((element) => element.outerHTML).join("");
+
   let rootPath = mode === "development" ? proxyUrl : basePath;
 
   if (mode === "development") {
@@ -74,6 +84,6 @@ export function defaultTemplateFunction({
   return `
 {%- macro url(path) -%}{{ '${rootPath}' | replace('/\\\\/$/', '') }}{{ path }}{%- endmacro -%}
 {% html at head %}${headString}{% endhtml %}
-{% html at endBody %}${endBody}{% endhtml %}
+{% html at endBody %}${endBodyString}{% endhtml %}
 `.trim();
 }

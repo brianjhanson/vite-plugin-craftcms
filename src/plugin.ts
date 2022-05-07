@@ -19,7 +19,8 @@ export default function craftPartials(options = {}) {
   let proxyUrl: string;
 
   return {
-    name: "twig:test",
+    name: "craftcms",
+    enforce: 'post',
 
     configResolved(resolvedConfig: ResolvedConfig) {
       config = resolvedConfig;
@@ -37,24 +38,28 @@ export default function craftPartials(options = {}) {
       }
 
       const inputFile = fs.readFileSync(input);
-      const { scripts, links, meta } = parseFile(inputFile.toString());
+      const { head, body} = parseFile(inputFile.toString());
 
       fs.writeFileSync(
         outputFile,
-        template({ scripts, links, meta, basePath, mode, proxyUrl })
+        template({ head, body, basePath, mode, proxyUrl })
       );
     },
 
-    transformIndexHtml(html: string) {
-      const { mode } = config;
+    transformIndexHtml: {
+      enforce: 'post',
+      transform(html: string) {
+        const { mode } = config;
 
-      if (mode !== "production") {
-        return;
-      }
+        if (mode !== "production") {
+          return;
+        }
 
-      const { scripts, links, meta } = parseFile(html);
-      fs.writeFileSync(outputFile, template({ scripts, links, meta, basePath, mode, proxyUrl }));
+        const { head, body} = parseFile(html);
+        fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
+      },
     },
+
 
     closeBundle() {
       console.log("Removing src files in dist ...");
