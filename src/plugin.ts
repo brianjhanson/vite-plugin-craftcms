@@ -63,6 +63,10 @@ export default function craftPartials(options = {}) {
       })
     },
 
+    async buildEnd(error) {
+      if (error) throw error;
+    },
+
     closeBundle() {
       console.log("Removing src files in dist ...");
       const outputPath = path.resolve(
