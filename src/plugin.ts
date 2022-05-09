@@ -20,7 +20,7 @@ export default function craftPartials(options = {}) {
 
   return {
     name: "craftcms",
-    enforce: 'post',
+    enforce: "post",
 
     configResolved(resolvedConfig: ResolvedConfig) {
       config = resolvedConfig;
