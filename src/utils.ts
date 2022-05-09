@@ -67,8 +67,8 @@ export function defaultTemplateFunction({
   proxyUrl = "",
   mode = "production",
 }: TemplateParams): string {
-  // const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
-  // const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
+  replaceAttribute(head.concat(body), "src", "./", `${proxyUrl}/src/`);
+  replaceAttribute(head.concat(body), "href", "./", `${proxyUrl}/src/`);
 
   // Create a string from HTML elements
   let headString = head.map((element) => element.outerHTML).join("");
