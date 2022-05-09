@@ -12,7 +12,7 @@ function isValidElement(item: any): boolean {
  */
 export function parseFile(html: string): ParsedHtml {
   const root = parse(html);
-  const headEl = root.querySelector("head");
+  const headEl = root.querySelector("head") ?? root;
   const bodyEl = root.querySelector("body");
 
   const head = <HTMLElement[]>headEl?.childNodes.filter(isValidElement);
