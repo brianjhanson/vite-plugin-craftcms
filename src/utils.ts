@@ -1,10 +1,14 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
 
-function isValidElement(item: any): boolean {
+/**
+ * Determines whether a given element should be included in the output.
+ * @param {HTMLElement|Node} element The element to check.
+ */
+function isElementIncluded(element: any): boolean {
   const validElements = ["script", "link"];
-  return item instanceof HTMLElement
-    && (validElements.includes(item.tagName) || validElements.includes(item.rawTagName));
+  return element instanceof HTMLElement
+    && (validElements.includes(element.tagName) || validElements.includes(element.rawTagName));
 }
 
 /**
@@ -15,8 +19,8 @@ export function parseFile(html: string): ParsedHtml {
   const headEl = root.querySelector("head") ?? root;
   const bodyEl = root.querySelector("body");
 
-  const head = <HTMLElement[]>headEl?.childNodes.filter(isValidElement);
-  const body = <HTMLElement[]>bodyEl?.childNodes.filter(isValidElement);
+  const head = <HTMLElement[]>headEl?.childNodes.filter(isElementIncluded);
+  const body = <HTMLElement[]>bodyEl?.childNodes.filter(isElementIncluded);
 
   return {
     head,
