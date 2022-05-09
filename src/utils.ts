@@ -2,11 +2,9 @@ import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
 
 function isValidElement(item: any): boolean {
+  const validElements = ["script", "link"];
   return item instanceof HTMLElement
-    && [
-      "script",
-      "link",
-    ].includes(item.tagName);
+    && (validElements.includes(item.tagName) || validElements.includes(item.rawTagName));
 }
 
 /**
