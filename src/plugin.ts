@@ -46,20 +46,22 @@ export default function craftPartials(options = {}) {
       );
     },
 
-    transformIndexHtml: {
-      enforce: 'post',
-      transform(html: string) {
-        const { mode } = config;
+    writeBundle(_, bundle) {
+      const { mode } = config;
 
-        if (mode !== "production") {
-          return;
+      if (mode !== "production") {
+        return;
+      }
+
+      Object.keys(bundle).forEach(name => {
+        const asset = bundle[name];
+        if (asset.fileName.match(/\.html$/) && 'source' in asset) {
+          console.log(`Generating ${asset.fileName} template...`)
+          const { head, body} = parseFile(asset.source.toString());
+          fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
         }
-
-        const { head, body} = parseFile(html);
-        fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
-      },
+      })
     },
-
 
     closeBundle() {
       console.log("Removing src files in dist ...");
