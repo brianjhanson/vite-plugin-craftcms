@@ -20,11 +20,15 @@ npm i -D vite-plugin-craftcms
 ### Create your entry file
 
 ```html
-<link rel="stylesheet" href="./styles/main.scss" />
-<script type="module" src="./scripts/main.js"></script>
+<head>
+  <link rel="stylesheet" href="./styles/main.scss">
+</head>
+<body>
+  <script type="module" src="./scripts/main.js"></script>
+</body>
 ```
 
-This should be an HTML fragment located in your `./src` directory. The asset paths within this file should be relative to the file. 
+This should be an HTML fragment located in your `./src` directory with a name that matches `rollupOptions.input` in your `vite.config`. The asset paths within this file should be relative to the file. 
 
 ### Add the plugin to your `vite.config` file.
 
@@ -74,7 +78,7 @@ export default defineConfig(({ command, mode }) => {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Craft Vite Boilerplate</title>
+  <title>Craft Vite</title>
 </head>
 
 <body>
@@ -86,7 +90,7 @@ export default defineConfig(({ command, mode }) => {
 ```
 ### Start it up
 
-A file will be generated in the location specified by the `outputFile` option. The default template function collects all the `meta` and `link` elements and wraps them in `{% html at head %}` in order to inject them into the head. While `script` tags are added at the end of the body. 
+A file will be generated in the location specified by the `outputFile` option. The default template function collects all `script` and `link` elements and wraps them in either `{% html at head %}` or `{% html at endBody %}` in order to inject them into the `<head>` or `<body>`.
 
 It will also replace all your relative URLs with URLs to the vite proxy server.
 
