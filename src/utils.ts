@@ -2,18 +2,29 @@ import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
 
 /**
+ * Determines whether a given element should be included in the output.
+ * @param {HTMLElement|Node} element The element to check.
+ */
+function isElementIncluded(element: any): boolean {
+  const validElements = ["script", "link"];
+  return element instanceof HTMLElement
+    && (validElements.includes(element.tagName) || validElements.includes(element.rawTagName));
+}
+
+/**
  * Parses an HTML string and separates it into scripts, links and meta tags
  */
 export function parseFile(html: string): ParsedHtml {
   const root = parse(html);
-  const scripts = root.querySelectorAll("script");
-  const links = root.querySelectorAll("link");
-  const meta = root.querySelectorAll("meta");
+  const headEl = root.querySelector("head") ?? root;
+  const bodyEl = root.querySelector("body");
+
+  const head = <HTMLElement[]>headEl?.childNodes.filter(isElementIncluded);
+  const body = <HTMLElement[]>bodyEl?.childNodes.filter(isElementIncluded);
 
   return {
-    scripts,
-    links,
-    meta,
+    head,
+    body
   };
 }
 
@@ -45,26 +56,26 @@ export function replaceAttribute(
 
 /**
  *
- * @param scripts
- * @param links
- * @param meta
+ * @param head
+ * @param body
  * @param basePath
  * @param proxyUrl
  * @param mode
  */
 export function defaultTemplateFunction({
-  scripts = [],
-  links = [],
-  meta = [],
+  head = [],
+  body = [],
   basePath = "",
   proxyUrl = "",
   mode = "production",
 }: TemplateParams): string {
-  const scriptTags = replaceAttribute(scripts, "src", "./", `${proxyUrl}/src/`);
-  const linkTags = replaceAttribute(links, "href", "./", `${proxyUrl}/src/`);
+  replaceAttribute(head.concat(body), "src", "./", `${proxyUrl}/src/`);
+  replaceAttribute(head.concat(body), "href", "./", `${proxyUrl}/src/`);
 
-  let headString = `${meta.join('')}${linkTags.join('')}`;
-  let endBody = `${scriptTags.join('')}`;
+  // Create a string from HTML elements
+  let headString = head.map((element) => element.outerHTML).join("");
+  let endBodyString = body.map((element) => element.outerHTML).join("");
+
   let rootPath = mode === "development" ? proxyUrl : basePath;
 
   if (mode === "development") {
@@ -74,6 +85,6 @@ export function defaultTemplateFunction({
   return `
 {%- macro url(path) -%}{{ '${rootPath}' | replace('/\\\\/$/', '') }}{{ path }}{%- endmacro -%}
 {% html at head %}${headString}{% endhtml %}
-{% html at endBody %}${endBody}{% endhtml %}
+{% html at endBody %}${endBodyString}{% endhtml %}
 `.trim();
 }

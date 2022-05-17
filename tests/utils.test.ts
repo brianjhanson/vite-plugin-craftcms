@@ -6,40 +6,43 @@ import {
 } from "../src/utils";
 
 const TEST_HTML = `
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./styles/main.scss">
-<link rel="stylesheet" href="./styles/test.scss">
-<script type="module" src="./scripts/main.js"></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./styles/main.scss">
+  <link rel="stylesheet" href="./styles/test.scss">
+</head>
+<body>
+  <script type="module" src="./scripts/main.js"></script>
+</body>
 `;
 
 test("parseFile", () => {
-  const { scripts, links, meta } = parseFile(TEST_HTML);
+  const { head, body } = parseFile(TEST_HTML);
 
-  expect(scripts).toHaveLength(1);
-  expect(links).toHaveLength(2);
-  expect(meta).toHaveLength(1);
+  expect(head).toHaveLength(2);
+  expect(body).toHaveLength(1);
 });
 
 test("replaceAttribute", () => {
-  const { scripts } = parseFile(TEST_HTML);
+  const { body } = parseFile(TEST_HTML);
 
-  const result = replaceAttribute(scripts, "src", "./", "http://localhost/");
+  const result = replaceAttribute(body, "src", "./", "http://localhost/");
   const expected = `<script type="module" src="http://localhost/scripts/main.js"></script>`;
   expect(result.toString()).toContain(expected);
 });
 
 test("defaultTemplateFunction production mode", () => {
-  const { scripts, links } = parseFile(TEST_HTML);
-  const result = defaultTemplateFunction({ scripts, links, basePath: "/dist/" });
+  const { head, body } = parseFile(TEST_HTML);
+  const result = defaultTemplateFunction({ head, body, basePath: "/dist/" });
 
   expect(result).toMatchSnapshot();
 });
 
 test("defaultTemplateFunction development mode", () => {
-  const { scripts, links } = parseFile(TEST_HTML);
+  const { head, body } = parseFile(TEST_HTML);
   const result = defaultTemplateFunction({
-    scripts,
-    links,
+    head,
+    body,
     mode: "development",
     proxyUrl: "http://localhost",
   });

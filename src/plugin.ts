@@ -19,7 +19,8 @@ export default function craftPartials(options = {}) {
   let proxyUrl: string;
 
   return {
-    name: "twig:test",
+    name: "craftcms",
+    enforce: "post",
 
     configResolved(resolvedConfig: ResolvedConfig) {
       config = resolvedConfig;
@@ -37,23 +38,33 @@ export default function craftPartials(options = {}) {
       }
 
       const inputFile = fs.readFileSync(input);
-      const { scripts, links, meta } = parseFile(inputFile.toString());
+      const { head, body} = parseFile(inputFile.toString());
 
       fs.writeFileSync(
         outputFile,
-        template({ scripts, links, meta, basePath, mode, proxyUrl })
+        template({ head, body, basePath, mode, proxyUrl })
       );
     },
 
-    transformIndexHtml(html: string) {
+    writeBundle(_, bundle) {
       const { mode } = config;
 
       if (mode !== "production") {
         return;
       }
 
-      const { scripts, links, meta } = parseFile(html);
-      fs.writeFileSync(outputFile, template({ scripts, links, meta, basePath, mode, proxyUrl }));
+      Object.keys(bundle).forEach(name => {
+        const asset = bundle[name];
+        if (asset.fileName.match(/\.html$/) && 'source' in asset) {
+          console.log(`Generating ${asset.fileName} template...`)
+          const { head, body} = parseFile(asset.source.toString());
+          fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
+        }
+      })
+    },
+
+    async buildEnd(error) {
+      if (error) throw error;
     },
 
     closeBundle() {

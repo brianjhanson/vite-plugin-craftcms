@@ -1,9 +1,8 @@
 import { HTMLElement } from "node-html-parser";
 
 export interface ParsedHtml {
-  scripts: HTMLElement[];
-  links: HTMLElement[];
-  meta: HTMLElement[];
+  head: HTMLElement[];
+  body: HTMLElement[];
 }
 
 export interface TemplateParams extends Partial<ParsedHtml> {
