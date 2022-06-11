@@ -9,7 +9,7 @@ export default function craftPartials(options = {}) {
     {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
-      devServerBaseAddress: "http://localhost",
+      devServerBaseAddress: "localhost",
     },
     options
   );
@@ -27,8 +27,9 @@ export default function craftPartials(options = {}) {
 
       const { base, server } = config;
 
+      const protocol = config.server.https ? 'https' : 'http';
       basePath = base;
-      proxyUrl = `${devServerBaseAddress}:${server.port || 3000}`;
+      proxyUrl = `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
     },
 
     buildStart({ input }: any) {
