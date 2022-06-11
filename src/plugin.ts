@@ -27,8 +27,8 @@ export default function craftPartials(options = {}) {
 
       const { base, server } = config;
 
-      const protocol = config.server.https ? 'https' : 'http';
       basePath = base;
+      const protocol = config.server.https ? 'https' : 'http';
       proxyUrl = `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
     },
 
