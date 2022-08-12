@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/brianjhanson/vite-plugin-craftcms#readme",
   "peerDependencies": {
-    "vite": "^2.0.0"
+    "vite": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.1",
