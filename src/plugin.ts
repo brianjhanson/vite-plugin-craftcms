@@ -4,12 +4,13 @@ import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
 
 export default function craftPartials(options = {}) {
-  const { outputFile, template, devServerBaseAddress } = Object.assign(
+  const { outputFile, template, devServerBaseAddress, proxyProtocol } = Object.assign(
     {},
     {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
       devServerBaseAddress: "localhost",
+      proxyProtocol: "",
     },
     options
   );
@@ -28,7 +29,7 @@ export default function craftPartials(options = {}) {
       const { base, server } = config;
 
       basePath = base;
-      const protocol = config.server.https ? 'https' : 'http';
+      const protocol = proxyProtocol ? proxyProtocol : config.server.https ? 'https' : 'http';
       proxyUrl = `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
     },
 
