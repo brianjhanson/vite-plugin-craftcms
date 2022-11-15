@@ -28,8 +28,14 @@ export default function craftPartials(options = {}) {
       const { base, server } = config;
 
       basePath = base;
-      const protocol = config.server.https ? 'https' : 'http';
-      proxyUrl = `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
+      if (server.origin) {
+        proxyUrl = server.origin;
+      } else {
+        const protocol = server.https ? "https" : "http";
+        proxyUrl = `${protocol}://${devServerBaseAddress}:${
+          server.port || 3000
+        }`;
+      }
     },
 
     buildStart({ input }: any) {
@@ -39,7 +45,7 @@ export default function craftPartials(options = {}) {
       }
 
       const inputFile = fs.readFileSync(input);
-      const { head, body} = parseFile(inputFile.toString());
+      const { head, body } = parseFile(inputFile.toString());
 
       fs.writeFileSync(
         outputFile,
@@ -54,14 +60,17 @@ export default function craftPartials(options = {}) {
         return;
       }
 
-      Object.keys(bundle).forEach(name => {
+      Object.keys(bundle).forEach((name) => {
         const asset = bundle[name];
-        if (asset.fileName.match(/\.html$/) && 'source' in asset) {
-          console.log(`Generating ${asset.fileName} template...`)
-          const { head, body} = parseFile(asset.source.toString());
-          fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
+        if (asset.fileName.match(/\.html$/) && "source" in asset) {
+          console.log(`Generating ${asset.fileName} template...`);
+          const { head, body } = parseFile(asset.source.toString());
+          fs.writeFileSync(
+            outputFile,
+            template({ head, body, basePath, mode, proxyUrl })
+          );
         }
-      })
+      });
     },
 
     async buildEnd(error) {
