@@ -4,13 +4,12 @@ import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
 
 export default function craftPartials(options = {}) {
-  const { outputFile, template, devServerBaseAddress, proxyProtocol } = Object.assign(
+  const { outputFile, template, devServerBaseAddress } = Object.assign(
     {},
     {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
       devServerBaseAddress: "localhost",
-      proxyProtocol: "",
     },
     options
   );
@@ -29,8 +28,11 @@ export default function craftPartials(options = {}) {
       const { base, server } = config;
 
       basePath = base;
-      const protocol = proxyProtocol ? proxyProtocol : config.server.https ? 'https' : 'http';
-      proxyUrl = `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
+      const protocol = config.server.https ? "https" : "http";
+
+      proxyUrl = server.origin
+        ? server.origin
+        : `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
     },
 
     buildStart({ input }: any) {
@@ -40,7 +42,7 @@ export default function craftPartials(options = {}) {
       }
 
       const inputFile = fs.readFileSync(input);
-      const { head, body} = parseFile(inputFile.toString());
+      const { head, body } = parseFile(inputFile.toString());
 
       fs.writeFileSync(
         outputFile,
@@ -55,14 +57,17 @@ export default function craftPartials(options = {}) {
         return;
       }
 
-      Object.keys(bundle).forEach(name => {
+      Object.keys(bundle).forEach((name) => {
         const asset = bundle[name];
-        if (asset.fileName.match(/\.html$/) && 'source' in asset) {
-          console.log(`Generating ${asset.fileName} template...`)
-          const { head, body} = parseFile(asset.source.toString());
-          fs.writeFileSync(outputFile, template({ head, body, basePath, mode, proxyUrl }));
+        if (asset.fileName.match(/\.html$/) && "source" in asset) {
+          console.log(`Generating ${asset.fileName} template...`);
+          const { head, body } = parseFile(asset.source.toString());
+          fs.writeFileSync(
+            outputFile,
+            template({ head, body, basePath, mode, proxyUrl })
+          );
         }
-      })
+      });
     },
 
     async buildEnd(error) {
