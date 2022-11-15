@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-craftcms",
-  "version": "1.0.0-8",
+  "version": "1.0.0-7",
   "description": "Use Vite with Craft CMS. No Craft plugin necessary",
   "files": [
     "dist"
