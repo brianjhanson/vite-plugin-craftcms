@@ -28,11 +28,14 @@ export default function craftPartials(options = {}) {
       const { base, server } = config;
 
       basePath = base;
-      const protocol = server.https ? "https" : "http";
-
-      proxyUrl = server.origin
-        ? server.origin
-        : `${protocol}://${devServerBaseAddress}:${server.port || 3000}`;
+      if (server.origin) {
+        proxyUrl = server.origin;
+      } else {
+        const protocol = server.https ? "https" : "http";
+        proxyUrl = `${protocol}://${devServerBaseAddress}:${
+          server.port || 3000
+        }`;
+      }
     },
 
     buildStart({ input }: any) {
