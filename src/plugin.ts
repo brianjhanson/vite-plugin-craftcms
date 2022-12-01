@@ -4,12 +4,13 @@ import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
 
 export default function craftPartials(options = {}) {
-  const { outputFile, template, devServerBaseAddress } = Object.assign(
+  const { outputFile, template, devServerBaseAddress, srcBase } = Object.assign(
     {},
     {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
       devServerBaseAddress: "localhost",
+      srcBase: "./src",
     },
     options
   );
@@ -82,7 +83,7 @@ export default function craftPartials(options = {}) {
       const outputPath = path.resolve(
         config.root,
         config.build.outDir,
-        "./src"
+        srcBase
       );
 
       fs.rmSync(outputPath, {
