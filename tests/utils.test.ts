@@ -33,7 +33,7 @@ test("replaceAttribute", () => {
 
 test("defaultTemplateFunction production mode", () => {
   const { head, body } = parseFile(TEST_HTML);
-  const result = defaultTemplateFunction({ head, body, basePath: "/dist/" });
+  const result = defaultTemplateFunction({ head, body, basePath: "/dist/", srcBase: "src" });
 
   expect(result).toMatchSnapshot();
 });
@@ -45,6 +45,7 @@ test("defaultTemplateFunction development mode", () => {
     body,
     mode: "development",
     proxyUrl: "http://localhost",
+    srcBase: "src"
   });
 
   expect(result).toMatchSnapshot();
