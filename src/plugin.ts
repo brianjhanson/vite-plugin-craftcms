@@ -50,7 +50,7 @@ export default function craftPartials(options = {}) {
 
       fs.writeFileSync(
         outputFile,
-        template({ head, body, basePath, mode, proxyUrl })
+        template({ head, body, basePath, mode, proxyUrl, srcBase })
       );
     },
 
