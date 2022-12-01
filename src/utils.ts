@@ -61,6 +61,7 @@ export function replaceAttribute(
  * @param basePath
  * @param proxyUrl
  * @param mode
+ * @param srcBase
  */
 export function defaultTemplateFunction({
   head = [],
@@ -68,9 +69,10 @@ export function defaultTemplateFunction({
   basePath = "",
   proxyUrl = "",
   mode = "production",
+  srcBase = "",
 }: TemplateParams): string {
-  replaceAttribute(head.concat(body), "src", "./", `${proxyUrl}/src/`);
-  replaceAttribute(head.concat(body), "href", "./", `${proxyUrl}/src/`);
+  replaceAttribute(head.concat(body), "src", "./", `${proxyUrl}/${srcBase}/`);
+  replaceAttribute(head.concat(body), "href", "./", `${proxyUrl}/${srcBase}/`);
 
   // Create a string from HTML elements
   let headString = head.map((element) => element.outerHTML).join("");

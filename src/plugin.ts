@@ -10,7 +10,7 @@ export default function craftPartials(options = {}) {
       outputFile: "./templates/_partials/vite.twig",
       template: defaultTemplateFunction,
       devServerBaseAddress: "localhost",
-      srcBase: "./src",
+      srcBase: "src",
     },
     options
   );
@@ -83,7 +83,7 @@ export default function craftPartials(options = {}) {
       const outputPath = path.resolve(
         config.root,
         config.build.outDir,
-        srcBase
+        `./${srcBase}`
       );
 
       fs.rmSync(outputPath, {
