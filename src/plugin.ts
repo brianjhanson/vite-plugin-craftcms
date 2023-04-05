@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Plugin, ResolvedConfig } from "vite";
 import { defaultTemplateFunction, parseFile } from "./utils";
+import { InputOptions } from "rollup";
 
 export default function craftPartials(options = {}) {
   const { outputFile, template, devServerBaseAddress } = Object.assign(
@@ -38,9 +39,9 @@ export default function craftPartials(options = {}) {
       }
     },
 
-    buildStart({ input }: any) {
+    buildStart({ input }: InputOptions) {
       const { mode } = config;
-      if (mode === "production") {
+      if (!input || mode === "production") {
         return;
       }
 
