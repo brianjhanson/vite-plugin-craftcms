@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Plugin, ResolvedConfig } from "vite";
-import { defaultTemplateFunction, parseFile } from "./utils";
+import { defaultTemplateFunction, filenameFromPath, formatOutputPath, getInputs, parseFile } from "./utils";
 
 export default function craftPartials(options = {}) {
   const { outputFile, template, devServerBaseAddress } = Object.assign(
@@ -44,13 +44,19 @@ export default function craftPartials(options = {}) {
         return;
       }
 
-      const inputFile = fs.readFileSync(input);
-      const { head, body } = parseFile(inputFile.toString());
+      const inputs = getInputs(input);
+      inputs.forEach((path) => {
+        const inputFile = fs.readFileSync(path);
+        const { head, body } = parseFile(inputFile.toString());
 
-      fs.writeFileSync(
-        outputFile,
-        template({ head, body, basePath, mode, proxyUrl })
-      );
+        // Get the filename from the path
+        const filename = filenameFromPath(path);
+
+        fs.writeFileSync(
+          formatOutputPath(outputFile, filename || ''),
+          template({ head, body, basePath, mode, proxyUrl })
+        );
+      });
     },
 
     writeBundle(_, bundle) {
@@ -65,8 +71,9 @@ export default function craftPartials(options = {}) {
         if (asset.fileName.match(/\.html$/) && "source" in asset) {
           console.log(`Generating ${asset.fileName} template...`);
           const { head, body } = parseFile(asset.source.toString());
+          const filename = filenameFromPath(asset.fileName);
           fs.writeFileSync(
-            outputFile,
+            formatOutputPath(outputFile, filename),
             template({ head, body, basePath, mode, proxyUrl })
           );
         }

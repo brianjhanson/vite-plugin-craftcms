@@ -88,6 +88,7 @@ export default defineConfig(({ command, mode }) => {
 </body>
 </html>
 ```
+
 ### Start it up
 
 A file will be generated in the location specified by the `outputFile` option. The default template function collects all `script` and `link` elements and wraps them in either `{% html at head %}` or `{% html at endBody %}` in order to inject them into the `<head>` or `<body>`.
@@ -107,6 +108,35 @@ With the example entry above, that output fill will be:
 
 Now you can load up your site, and should be able to enjoy all that vite has to offer. 
 
+### Using multiple entry points
+
+If your site requires multiple unique sets of assets, you can set multiple input files in your `vite.config` file:
+
+```js
+import { vitePluginCraftCms } from "vite-plugin-craftcms";
+
+// https://vitejs.dev/config/
+export default defineConfig(({ command, mode }) => {
+  return {
+    // …
+    build: {
+      rollupOptions: {
+        input: [
+          "./src/entry-one.html",
+          "./src/entry-two.html",
+      ],
+      },
+    },
+    plugins: [
+      vitePluginCraftCms({
+        outputFile: "./templates/_partials/vite-*.twig",
+      }),
+    ],
+  };
+});
+```
+
+Your `outputFile` value in the plugin settings will need to include a `*` wildcard to generate appropriately named files.
 
 ### Static assets in Twig
 

@@ -88,3 +88,40 @@ export function defaultTemplateFunction({
 {% html at endBody %}${endBodyString}{% endhtml %}
 `.trim();
 }
+
+/**
+ * Formats an output path by processsing a wildcard *
+ * @param path
+ * @param name
+ */
+export function formatOutputPath(path: string, name?: string): string {
+  // Replace a * in the path with the name
+  return name
+    ? path.replace("*", name)
+    : path;
+}
+
+/**
+ * Returns an array of inputs from a given input
+ * @param input
+ */
+export function getInputs(input: string | string[] | { [key: string]: string }): string[] {
+  if (typeof input === "string") {
+    return [input];
+  }
+  if (Array.isArray(input)) {
+    return input;
+  }
+  if (typeof input === "object") {
+    return Object.values(input);
+  }
+  return [];
+}
+
+/**
+ * Get the filename from a path
+ * @param path
+ */
+export function filenameFromPath(path: string): string {
+  return path?.split("/")?.pop()?.split(".")[0] || "";
+}

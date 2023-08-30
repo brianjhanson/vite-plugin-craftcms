@@ -1,6 +1,9 @@
 import { expect, test } from "vitest";
 import {
   defaultTemplateFunction,
+  filenameFromPath,
+  formatOutputPath,
+  getInputs,
   parseFile,
   replaceAttribute,
 } from "../src/utils";
@@ -48,4 +51,26 @@ test("defaultTemplateFunction development mode", () => {
   });
 
   expect(result).toMatchSnapshot();
+});
+
+test("formatOutputPath", () => {
+  expect(formatOutputPath('./templates/foo.twig')).toEqual("./templates/foo.twig");
+  expect(formatOutputPath('./templates/*.twig', 'foo')).toEqual("./templates/foo.twig");
+  expect(formatOutputPath('./templates/vite-*.twig', 'foo')).toEqual("./templates/vite-foo.twig");
+});
+
+test("getInputs", () => {
+  expect(getInputs("./src/one.html")).toEqual(["./src/one.html"]);
+  expect(getInputs(["./src/one.html", "./src/two.html"])).toEqual(["./src/one.html", "./src/two.html"]);
+  expect(getInputs({ one: "./src/one.html", two: "./src/two.html" })).toEqual(["./src/one.html", "./src/two.html"]);
+});
+
+test("filenameFromPath", () => {
+  [
+    './src/foo.html',
+    'src/foo.html',
+    'foo.html',
+  ].forEach((path) => {
+    expect(filenameFromPath(path)).toEqual('foo');
+  })
 });
