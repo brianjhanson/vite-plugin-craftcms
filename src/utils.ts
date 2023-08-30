@@ -1,5 +1,6 @@
 import { HTMLElement, parse } from "node-html-parser";
 import { ParsedHtml, TemplateParams } from "./types";
+import { InputOption } from "rollup";
 
 /**
  * Determines whether a given element should be included in the output.
@@ -103,9 +104,9 @@ export function formatOutputPath(path: string, name?: string): string {
 
 /**
  * Returns an array of inputs from a given input
- * @param input
+ * @param {InputOption} input
  */
-export function getInputs(input: string | string[] | { [key: string]: string }): string[] {
+export function getInputs(input: InputOption): string[] {
   if (typeof input === "string") {
     return [input];
   }
