@@ -16,7 +16,7 @@ export default defineConfig(() => {
     },
     plugins: [
       vitePluginCraftCms({
-        outputFile: "./templates/vite-*.twig",
+        outputFile: "./templates/vite-[name].twig",
       }),
     ],
   };

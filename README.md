@@ -124,19 +124,19 @@ export default defineConfig(({ command, mode }) => {
         input: [
           "./src/entry-one.html",
           "./src/entry-two.html",
-      ],
+        ],
       },
     },
     plugins: [
       vitePluginCraftCms({
-        outputFile: "./templates/_partials/vite-*.twig",
+        outputFile: "./templates/_partials/vite-[name].twig",
       }),
     ],
   };
 });
 ```
 
-Your `outputFile` value in the plugin settings will need to include a `*` wildcard to generate appropriately named files.
+Your `outputFile` value in the plugin settings will need to include a `[name]` wildcard to generate appropriately named files.
 
 ### Static assets in Twig
 

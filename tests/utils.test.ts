@@ -55,8 +55,8 @@ test("defaultTemplateFunction development mode", () => {
 
 test("formatOutputPath", () => {
   expect(formatOutputPath('./templates/foo.twig')).toEqual("./templates/foo.twig");
-  expect(formatOutputPath('./templates/*.twig', 'foo')).toEqual("./templates/foo.twig");
-  expect(formatOutputPath('./templates/vite-*.twig', 'foo')).toEqual("./templates/vite-foo.twig");
+  expect(formatOutputPath('./templates/[name].twig', 'foo')).toEqual("./templates/foo.twig");
+  expect(formatOutputPath('./templates/vite-[name].twig', 'foo')).toEqual("./templates/vite-foo.twig");
 });
 
 test("getInputs", () => {

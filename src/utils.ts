@@ -96,9 +96,9 @@ export function defaultTemplateFunction({
  * @param name
  */
 export function formatOutputPath(path: string, name?: string): string {
-  // Replace a * in the path with the name
+  // Replace a wildcard in the path with the name
   return name
-    ? path.replace("*", name)
+    ? path.replace("[name]", name)
     : path;
 }
 
