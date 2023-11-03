@@ -1,5 +1,6 @@
 import { HTMLElement, parse } from "node-html-parser";
-import { ParsedHtml, TemplateParams } from "./types";
+import type { ParsedHtml, TemplateParams } from "./types";
+import type { InputOption } from "rollup";
 
 /**
  * Determines whether a given element should be included in the output.
@@ -87,4 +88,41 @@ export function defaultTemplateFunction({
 {% html at head %}${headString}{% endhtml %}
 {% html at endBody %}${endBodyString}{% endhtml %}
 `.trim();
+}
+
+/**
+ * Formats an output path by processsing a wildcard *
+ * @param path
+ * @param name
+ */
+export function formatOutputPath(path: string, name?: string): string {
+  // Replace a wildcard in the path with the name
+  return name
+    ? path.replace("[name]", name)
+    : path;
+}
+
+/**
+ * Returns an array of inputs from a given input
+ * @param {InputOption} input
+ */
+export function getInputs(input: InputOption): string[] {
+  if (typeof input === "string") {
+    return [input];
+  }
+  if (Array.isArray(input)) {
+    return input;
+  }
+  if (typeof input === "object") {
+    return Object.values(input);
+  }
+  return [];
+}
+
+/**
+ * Get the filename from a path
+ * @param path
+ */
+export function filenameFromPath(path: string): string {
+  return path?.split("/")?.pop()?.split(".")[0] || "";
 }

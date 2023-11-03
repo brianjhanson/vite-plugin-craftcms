@@ -8,12 +8,15 @@ export default defineConfig(() => {
       emptyOutDir: true,
       outDir: "./dist/",
       rollupOptions: {
-        input: "./src/entry.html",
+        input: [
+          "./src/entry-one.html",
+          "./src/entry-two.html",
+        ],
       },
     },
     plugins: [
       vitePluginCraftCms({
-        outputFile: "./dist/vite.twig",
+        outputFile: "./templates/vite-[name].twig",
       }),
     ],
   };
