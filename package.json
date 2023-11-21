@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-craftcms",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Use Vite with Craft CMS. No Craft plugin necessary",
   "files": [
     "dist"
@@ -12,8 +12,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "unbuild",
+    "check": "prettier . --check",
     "prepublishOnly": "npm run build",
-    "release": "np"
+    "release": "np",
+    "prepare": "husky install"
   },
   "exports": {
     ".": {
@@ -48,8 +50,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.3",
-    "eslint": "^8.54.0",
-    "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
     "np": "^8.0.4",
     "prettier": "^3.1.0",
     "rollup": "^4.5.0",
