@@ -46,3 +46,6 @@ jobs:
 
       - name: Test
         run: npm run test
+
+      - name: Check
+        run: npm run check
