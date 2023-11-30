@@ -62,5 +62,8 @@
   },
   "dependencies": {
     "node-html-parser": "^6.1.11"
+  },
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
   }
 }
