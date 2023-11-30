@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`defaultTemplateFunction development mode 1`] = `
 "{%- macro url(path) -%}{{ 'http://localhost' | replace('/\\\\\\\\/$/', '') }}{{ path }}{%- endmacro -%}
