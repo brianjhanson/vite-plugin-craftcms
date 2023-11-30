@@ -1,7 +1,5 @@
 # Vite Plugin Craft CMS
 
-
-
 A [vite](https://vitejs.dev/) plugin that that allows you to use vite with Craft CMS without a Craft plugin.
 
 ## General Approach
@@ -21,14 +19,14 @@ npm i -D vite-plugin-craftcms
 
 ```html
 <head>
-  <link rel="stylesheet" href="./styles/main.scss">
+  <link rel="stylesheet" href="./styles/main.scss" />
 </head>
 <body>
   <script type="module" src="./scripts/main.js"></script>
 </body>
 ```
 
-This should be an HTML fragment located in your `./src` directory with a name that matches `rollupOptions.input` in your `vite.config`. The asset paths within this file should be relative to the file. 
+This should be an HTML fragment located in your `./src` directory with a name that matches `rollupOptions.input` in your `vite.config`. The asset paths within this file should be relative to the file.
 
 ### Add the plugin to your `vite.config` file.
 
@@ -64,6 +62,7 @@ export default defineConfig(({ command, mode }) => {
 ```
 
 ### Import the partial
+
 ```twig
 {#
  # =========================================================
@@ -96,6 +95,7 @@ A file will be generated in the location specified by the `outputFile` option. T
 It will also replace all your relative URLs with URLs to the vite proxy server.
 
 With the example entry above, that output fill will be:
+
 ```twig
 {% html at head %}
 <script type="module" src="http://localhost:3300/@vite/client"></script>
@@ -106,7 +106,7 @@ With the example entry above, that output fill will be:
 {% endhtml %}
 ```
 
-Now you can load up your site, and should be able to enjoy all that vite has to offer. 
+Now you can load up your site, and should be able to enjoy all that vite has to offer.
 
 ### Using multiple entry points
 
@@ -121,10 +121,7 @@ export default defineConfig(({ command, mode }) => {
     // …
     build: {
       rollupOptions: {
-        input: [
-          "./src/entry-one.html",
-          "./src/entry-two.html",
-        ],
+        input: ["./src/entry-one.html", "./src/entry-two.html"],
       },
     },
     plugins: [

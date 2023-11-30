@@ -8,8 +8,11 @@ import type { InputOption } from "rollup";
  */
 function isElementIncluded(element: any): boolean {
   const validElements = ["script", "link"];
-  return element instanceof HTMLElement
-    && (validElements.includes(element.tagName) || validElements.includes(element.rawTagName));
+  return (
+    element instanceof HTMLElement &&
+    (validElements.includes(element.tagName) ||
+      validElements.includes(element.rawTagName))
+  );
 }
 
 /**
@@ -25,7 +28,7 @@ export function parseFile(html: string): ParsedHtml {
 
   return {
     head,
-    body
+    body,
   };
 }
 
@@ -41,7 +44,7 @@ export function replaceAttribute(
   elements: HTMLElement[],
   attribute: string,
   search: string,
-  replace: string
+  replace: string,
 ) {
   return elements.map((element) => {
     const currentValue = element.getAttribute(attribute);
@@ -97,9 +100,7 @@ export function defaultTemplateFunction({
  */
 export function formatOutputPath(path: string, name?: string): string {
   // Replace a wildcard in the path with the name
-  return name
-    ? path.replace("[name]", name)
-    : path;
+  return name ? path.replace("[name]", name) : path;
 }
 
 /**

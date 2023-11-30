@@ -1,7 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { Plugin, ResolvedConfig } from "vite";
-import { defaultTemplateFunction, filenameFromPath, formatOutputPath, getInputs, parseFile } from "./utils";
+import {
+  defaultTemplateFunction,
+  filenameFromPath,
+  formatOutputPath,
+  getInputs,
+  parseFile,
+} from "./utils";
 
 export default function craftPartials(options = {}) {
   const { outputFile, template, devServerBaseAddress } = Object.assign(
@@ -11,7 +17,7 @@ export default function craftPartials(options = {}) {
       template: defaultTemplateFunction,
       devServerBaseAddress: "localhost",
     },
-    options
+    options,
   );
 
   let config: ResolvedConfig;
@@ -53,8 +59,8 @@ export default function craftPartials(options = {}) {
         const filename = filenameFromPath(path);
 
         fs.writeFileSync(
-          formatOutputPath(outputFile, filename || ''),
-          template({ head, body, basePath, mode, proxyUrl })
+          formatOutputPath(outputFile, filename || ""),
+          template({ head, body, basePath, mode, proxyUrl }),
         );
       });
     },
@@ -74,7 +80,7 @@ export default function craftPartials(options = {}) {
           const filename = filenameFromPath(asset.fileName);
           fs.writeFileSync(
             formatOutputPath(outputFile, filename),
-            template({ head, body, basePath, mode, proxyUrl })
+            template({ head, body, basePath, mode, proxyUrl }),
           );
         }
       });
@@ -89,7 +95,7 @@ export default function craftPartials(options = {}) {
       const outputPath = path.resolve(
         config.root,
         config.build.outDir,
-        "./src"
+        "./src",
       );
 
       fs.rmSync(outputPath, {

@@ -54,23 +54,31 @@ test("defaultTemplateFunction development mode", () => {
 });
 
 test("formatOutputPath", () => {
-  expect(formatOutputPath('./templates/foo.twig')).toEqual("./templates/foo.twig");
-  expect(formatOutputPath('./templates/[name].twig', 'foo')).toEqual("./templates/foo.twig");
-  expect(formatOutputPath('./templates/vite-[name].twig', 'foo')).toEqual("./templates/vite-foo.twig");
+  expect(formatOutputPath("./templates/foo.twig")).toEqual(
+    "./templates/foo.twig",
+  );
+  expect(formatOutputPath("./templates/[name].twig", "foo")).toEqual(
+    "./templates/foo.twig",
+  );
+  expect(formatOutputPath("./templates/vite-[name].twig", "foo")).toEqual(
+    "./templates/vite-foo.twig",
+  );
 });
 
 test("getInputs", () => {
   expect(getInputs("./src/one.html")).toEqual(["./src/one.html"]);
-  expect(getInputs(["./src/one.html", "./src/two.html"])).toEqual(["./src/one.html", "./src/two.html"]);
-  expect(getInputs({ one: "./src/one.html", two: "./src/two.html" })).toEqual(["./src/one.html", "./src/two.html"]);
+  expect(getInputs(["./src/one.html", "./src/two.html"])).toEqual([
+    "./src/one.html",
+    "./src/two.html",
+  ]);
+  expect(getInputs({ one: "./src/one.html", two: "./src/two.html" })).toEqual([
+    "./src/one.html",
+    "./src/two.html",
+  ]);
 });
 
 test("filenameFromPath", () => {
-  [
-    './src/foo.html',
-    'src/foo.html',
-    'foo.html',
-  ].forEach((path) => {
-    expect(filenameFromPath(path)).toEqual('foo');
-  })
+  ["./src/foo.html", "src/foo.html", "foo.html"].forEach((path) => {
+    expect(filenameFromPath(path)).toEqual("foo");
+  });
 });

@@ -8,10 +8,7 @@ export default defineConfig(() => {
       emptyOutDir: true,
       outDir: "./dist/",
       rollupOptions: {
-        input: [
-          "./src/entry-one.html",
-          "./src/entry-two.html",
-        ],
+        input: ["./src/entry-one.html", "./src/entry-two.html"],
       },
     },
     plugins: [
