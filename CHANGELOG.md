@@ -1,4 +1,4 @@
-## Unreleased
+## 2.1.0 — 2023.12.05
 
 - Remove ESLint dependency
 - Support Vite v5
