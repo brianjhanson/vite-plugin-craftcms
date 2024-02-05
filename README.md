@@ -11,7 +11,6 @@ The plugin parses the `index.html` file created by Vite and generates a Craft tw
 ### Install the plugin
 
 ```
-// TODO - publish the package
 npm i -D vite-plugin-craftcms
 ```
 
