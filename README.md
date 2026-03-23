@@ -44,7 +44,7 @@ export default defineConfig(({ command, mode }) => {
       emptyOutDir: true,
       manifest: true,
       outDir: "./web/dist/",
-      rollupOptions: {
+      rolldownOptions: {
         input: "./src/entry.html",
       },
     },
