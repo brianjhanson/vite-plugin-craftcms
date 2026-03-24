@@ -25,7 +25,7 @@ npm i -D vite-plugin-craftcms
 </body>
 ```
 
-This should be an HTML fragment located in your `./src` directory with a name that matches `rollupOptions.input` in your `vite.config`. The asset paths within this file should be relative to the file.
+This should be an HTML fragment located in your `./src` directory with a name that matches `rolldownOptions.input` in your `vite.config`. The asset paths within this file should be relative to the file.
 
 ### Add the plugin to your `vite.config` file.
 
@@ -44,7 +44,7 @@ export default defineConfig(({ command, mode }) => {
       emptyOutDir: true,
       manifest: true,
       outDir: "./web/dist/",
-      rollupOptions: {
+      rolldownOptions: {
         input: "./src/entry.html",
       },
     },
@@ -119,7 +119,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     // …
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         input: ["./src/entry-one.html", "./src/entry-two.html"],
       },
     },

@@ -7,7 +7,7 @@ export default defineConfig(() => {
     build: {
       emptyOutDir: true,
       outDir: "./dist/",
-      rollupOptions: {
+      rolldownOptions: {
         input: ["./src/entry-one.html", "./src/entry-two.html"],
       },
     },

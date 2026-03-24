@@ -1,6 +1,6 @@
 import { HTMLElement, parse } from "node-html-parser";
 import type { ParsedHtml, TemplateParams } from "./types";
-import type { InputOption } from "rollup";
+import type { InputOption } from "rolldown";
 
 /**
  * Determines whether a given element should be included in the output.
